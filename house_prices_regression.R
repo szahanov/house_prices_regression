@@ -20,13 +20,14 @@ dataset_test<- read.csv("test.csv")
 library(caret)	# load package
 # install.packages('e1071', dependencies=FALSE) # If the package has not already been installed
 library(e1071)	# load package
-
+# install.packages("xgboost")
+library(xgboost)
 
 # install.packages("xgboost",dependencies=FALSE) # If the package has not already been installed
-install.packages("drat")
-drat:::addRepo("dmlc")
-install.packages("xgboost", repos="http://dmlc.ml/drat/", type = "source")
-library(xgboost)
+#install.packages("drat")
+#drat:::addRepo("dmlc")
+#install.packages("xgboost", repos="http://dmlc.ml/drat/", type = "source")
+#library(xgboost)
 
 # Take a look at the data
 summary(dataset)
@@ -185,6 +186,19 @@ i=5;(datasubset$SalePrice[i] - predictions[i])/datasubset$SalePrice[i]
 i=20;(datasubset$SalePrice[i] - predictions[i])/datasubset$SalePrice[i]
 i=35;(datasubset$SalePrice[i] - predictions[i])/datasubset$SalePrice[i]
 plot((datasubset$SalePrice - predictions)/datasubset$SalePrice)
+
+
+# Need to download xgboost manually since it wasn't working from CRAN
+# https://cran.r-project.org/web/packages/xgboost/index.html
+# https://cran.r-project.org/web/packages/drat/index.html
+# download the zip files
+# utils:::menuInstallLocal()
+
+
+
+
+
+
 
 
 #### Section 2 - Look at the data
