@@ -111,90 +111,81 @@ x <- sapply(x, as.numeric)
 # datasubset <- matrix(c(dataset$SalePrice,dataset$X1stFlrSF,dataset$X2ndFlrSF),nrow=length(dataset$SalePrice))
 #datasubset <- dataset[,c("SalePrice","MSZoning","X1stFlrSF","X2ndFlrSF")]
 #colnames(datasubset) <- c("SalePrice","MSZoning","X1stFlrSF","X2ndFlrSF")
-dataset <- dataset[,c("SalePrice",	"MSSubClass",	"LotArea",	"OverallQual",	"OverallCond",
-"YearBuilt",	"YearRemodAdd",	"BsmtFinSF1",	"BsmtUnfSF",	"X1stFlrSF",	"X2ndFlrSF",	"BsmtFullBath",	"BsmtHalfBath",	"FullBath",	"HalfBath",	"BedroomAbvGr",	"KitchenAbvGr",	"GarageCars",	"WoodDeckSF",	"OpenPorchSF",	"EnclosedPorch",	"X3SsnPorch",	"ScreenPorch",	"PoolArea",	"YrSold")]
-colnames(dataset) <- c("SalePrice",	"MSSubClass",	"LotArea",	"OverallQual",	"OverallCond",	"YearBuilt",	"YearRemodAdd",	"BsmtFinSF1",	"BsmtUnfSF",	"X1stFlrSF",	"X2ndFlrSF",	"BsmtFullBath",	"BsmtHalfBath",	"FullBath",	"HalfBath",	"BedroomAbvGr",	"KitchenAbvGr",	"GarageCars",	"WoodDeckSF",	"OpenPorchSF",	"EnclosedPorch",	"X3SsnPorch",	"ScreenPorch",	"PoolArea",	"YrSold")
-
-
-# https://www.analyticsvidhya.com/blog/2016/01/xgboost-algorithm-easy-steps/
-
-# xgb <- xgboost(data = data.matrix(dataset[,-1]),  label = y,  eta = 0.1, max_depth = 15,  nround=25,  subsample = 0.5, colsample_bytree = 0.5, seed = 1, eval_metric = "merror", objective = "multi:softprob", num_class = 12, nthread = 3)
-
-
-output_vector <- dataset[,1]
-
-xgb <- xgboost(data = data.matrix(dataset[,-1]),  label = output_vector,  eta = 0.1, max_depth = 15,  nround=25)
-
-# predict values in test set
-xgb_predictions <- predict(xgb, data.matrix(dataset[,-1]))
-
-plot(xgb_predictions,dataset$SalePrice)
-
-# MSE
-sum((dataset$SalePrice - xgb_predictions)^2)
-# AVG - test mean square error
-mse_test_value <- mean((dataset$SalePrice - xgb_predictions)^2)
-
-# some spot checks
-i=5;(xgb_predictions[i] - dataset$SalePrice[i])/dataset$SalePrice[i]
-i=20;(xgb_predictions[i] - dataset$SalePrice[i])/dataset$SalePrice[i]
-i=35;(xgb_predictions[i] - dataset$SalePrice[i])/dataset$SalePrice[i]
-plot((xgb_predictions - dataset$SalePrice)/dataset$SalePrice)
-
-
-
-
-
-# Look at variable importance
-X <- dataset
-# Lets start with finding what the actual tree looks like
-model <- xgb.dump(xgb, with.stats = T)
-model[1:10] #This statement prints top 10 nodes of the model
-# Get the feature real names
-names <- dimnames(data.matrix(X[,-1]))[[2]]
-# Compute feature importance matrix
-importance_matrix <- xgb.importance(names, model = xgb)
-# Nice graph
-xgb.plot.importance(importance_matrix[1:10,])
-#In case last step does not work for you because of a version issue, you can try following :
-barplot(importance_matrix[,1])
-
-
-
-
-
-
-
-
-
-
-
-## Random Forest model for comparison
+datasubset <- dataset[,c("SalePrice",
+	"MSSubClass",
+	"LotArea",
+	"OverallQual",
+	"OverallCond",
+	"YearBuilt",
+	"YearRemodAdd",
+	"BsmtFinSF1",
+	"BsmtUnfSF",
+	"X1stFlrSF",
+	"X2ndFlrSF",
+	"BsmtFullBath",
+	"BsmtHalfBath",
+	"FullBath",
+	"HalfBath",
+	"BedroomAbvGr",
+	"KitchenAbvGr",
+	"GarageCars",
+	"WoodDeckSF",
+	"OpenPorchSF",
+	"EnclosedPorch",
+	"X3SsnPorch",
+	"ScreenPorch",
+	"PoolArea",
+	"YrSold")]
+colnames(datasubset) <- c("SalePrice",
+	"MSSubClass",
+	"LotArea",
+	"OverallQual",
+	"OverallCond",
+	"YearBuilt",
+	"YearRemodAdd",
+	"BsmtFinSF1",
+	"BsmtUnfSF",
+	"X1stFlrSF",
+	"X2ndFlrSF",
+	"BsmtFullBath",
+	"BsmtHalfBath",
+	"FullBath",
+	"HalfBath",
+	"BedroomAbvGr",
+	"KitchenAbvGr",
+	"GarageCars",
+	"WoodDeckSF",
+	"OpenPorchSF",
+	"EnclosedPorch",
+	"X3SsnPorch",
+	"ScreenPorch",
+	"PoolArea",
+	"YrSold")
 
 # better row and column names: https://stackoverflow.com/questions/16032778/how-to-set-unique-row-and-column-names-of-a-matrix-when-its-dimension-is-unknown
 controlDTree <- trainControl(method="cv", 5)
-modelDTree <- train(SalePrice ~ ., data=dataset, method="rf", trControl=controlDTree, ntree=150)
+modelDTree <- train(SalePrice ~ ., data=datasubset, method="rf", trControl=controlDTree, ntree=150)
 modelDTree
 
 ## Test the model
 
 #predictions <- predict(modelDTree, datasubset[,2:4])
-predictions <- predict(modelDTree, dataset[,2:25])
+predictions <- predict(modelDTree, datasubset[,2:25])
 #confusionMatrix(predictions, datasubset$SalePrice) #not for regression?
-plot(predictions,dataset$SalePrice)
+plot(predictions,datasubset$SalePrice)
 
 
 # MSE
-sum((dataset$SalePrice - predictions)^2)
+sum((datasubset$SalePrice - predictions)^2)
 # AVG - test mean square error
-mse_test_value <- mean((dataset$SalePrice - predictions)^2)
+mse_test_value <- mean((datasubset$SalePrice - predictions)^2)
 # https://tomaztsql.wordpress.com/2016/01/11/playing-with-regression-prediction-and-mse-measure/
 
 # some spot checks
-i=5;(dataset$SalePrice[i] - predictions[i])/dataset$SalePrice[i]
-i=20;(dataset$SalePrice[i] - predictions[i])/dataset$SalePrice[i]
-i=35;(dataset$SalePrice[i] - predictions[i])/dataset$SalePrice[i]
-plot((dataset$SalePrice - predictions)/dataset$SalePrice)
+i=5;(datasubset$SalePrice[i] - predictions[i])/datasubset$SalePrice[i]
+i=20;(datasubset$SalePrice[i] - predictions[i])/datasubset$SalePrice[i]
+i=35;(datasubset$SalePrice[i] - predictions[i])/datasubset$SalePrice[i]
+plot((datasubset$SalePrice - predictions)/datasubset$SalePrice)
 
 
 # Need to download xgboost manually since it wasn't working from CRAN
