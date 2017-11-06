@@ -119,6 +119,28 @@ xgb.plot.importance(importance_matrix[1:20,])
 
 
 
+
+# Remove variables
+xgb3 <- xgboost(data = data.matrix(X[,c(2:39,41:80)]),  label = output_vector,  eta = 0.3, max_depth = 6,  nround=100)
+xgb3_predictions <- predict(xgb3, data.matrix(X[,c(2:39,41:80)]))
+names <- dimnames(data.matrix(X[,c(2:39,41:80)]))[[2]]
+importance_matrix <- xgb.importance(names, model = xgb3)
+xgb.plot.importance(importance_matrix[1:20,])
+mse_test_value3 <- mean((xgb3_predictions - dataset_clean$SalePrice)^2)
+
+
+
+# > mse_test_value
+# [1] 1481990
+# > mse_test_value2
+# [1] 461194.3
+# > mse_test_value3
+# [1] 462714.4
+# importance_matrix[1:40,1]
+
+
+
+
 # Final variable selection:
 
 # overallqual, garagecars, x1st, x2nd, bsmtfin, fullbath, lotarea, yearremodeled, openporch, yearbuilt, overallcond, halfbath, bsmtunf, mssubclass, wooddeck
