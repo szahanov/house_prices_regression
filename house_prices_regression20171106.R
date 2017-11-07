@@ -134,46 +134,21 @@ output_vector <- dataset_clean[,1]
 xgb_allvars <- xgboost(data = data.matrix(training_clean[,2:80]),  label = output_vector,  eta = 0.3, max_depth = 6,  nround=100)
 xgb_allvars_predictions <- predict(xgb_allvars, data.matrix(training_clean[,2:80]))
 mse_allvars <- mean((xgb_allvars_predictions - dataset_clean$SalePrice)^2)
-names <- dimnames(data.matrix(training_clean[,2:80]))[[2]]
 importance_matrix <- xgb.importance(names, model = xgb_allvars)
 xgb.plot.importance(importance_matrix[1:20,])
 
 # Variables in order of importance:
 # "OverallQual", "GrLivArea", "GarageCars", "FullBath", "BsmtFinSF1", "TotalBsmtSF", "LotArea", "TotRmsAbvGrd", "X1stFlrSF", "GarageArea", "YearRemodAdd", "LotFrontage", "BsmtFinType1", "GarageFinish", "Fireplaces", "MoSold", "Neighborhood", "X2ndFlrSF", "YearBuilt", "SaleCondition", "BsmtUnfSF", "OverallCond", "GarageYrBlt", "CentralAir", "BsmtQual", "MasVnrArea", "WoodDeckSF", "GarageType", "MSZoning", "BedroomAbvGr", "Exterior1st", "MSSubClass", "Condition1", "KitchenQual", "BsmtExposure", "ScreenPorch", "OpenPorchSF", "Functional", "EnclosedPorch", "LotConfig", "PavedDrive", "LandContour", "BsmtFinSF2", "LotShape", "BsmtFullBath", "ExterQual", "YrSold", "FireplaceQu", "RoofStyle", "Condition2", "SaleType", "GarageQual", "Fence", "MasVnrType", "HouseStyle", "RoofMatl", "Exterior2nd", "Alley", "BsmtCond", "HeatingQC", "HalfBath", "BldgType", "Electrical", "BsmtFinType2", "MiscVal", "BsmtHalfBath", "GarageCond", "ExterCond", "X3SsnPorch", "MiscFeature", "Foundation", "LandSlope", "LowQualFinSF", "", "Utilities", "KitchenAbvGr", "PoolArea"
 
-# Saved after feature selection:
-# "SalePrice",	"OverallQual", "GrLivArea", "GarageCars", "FullBath", "TotalBsmtSF", "LotArea", "TotRmsAbvGrd", "X1stFlrSF", "GarageArea", "YearRemodAdd", "LotFrontage", "GarageFinish", "Fireplaces", "MoSold", "Neighborhood", "X2ndFlrSF", "YearBuilt", "SaleCondition", "OverallCond", "GarageYrBlt", "CentralAir", "BsmtQual", "MasVnrArea", "WoodDeckSF", "GarageType", "MSZoning", "BedroomAbvGr", "Exterior1st", "MSSubClass", "Condition1", "KitchenQual", "BsmtExposure", "ScreenPorch", "OpenPorchSF", "Functional"
-# > mse_reselected
-# [1] 427093.6
 
 
-# Second try:
-# "OverallQual", "GrLivArea", "GarageCars", "FullBath", "BsmtFinSF1", "TotalBsmtSF", "LotArea", "TotRmsAbvGrd", "X1stFlrSF", "GarageArea", "YearRemodAdd", "LotFrontage", "BsmtFinType1", "GarageFinish", "Fireplaces", "MoSold", "Neighborhood", "X2ndFlrSF", "YearBuilt", "SaleCondition", "BsmtUnfSF", "OverallCond", "GarageYrBlt", "CentralAir", "BsmtQual", "MasVnrArea", "WoodDeckSF", "GarageType", "", "MSZoning", "BedroomAbvGr", "Exterior1st", "MSSubClass", "Condition1", "KitchenQual", "BsmtExposure", "ScreenPorch", "OpenPorchSF", "Functional", "EnclosedPorch", "LotConfig", "PavedDrive", "BsmtFinSF2", "LandContour", "LotShape", "BsmtFullBath", "ExterQual", "YrSold", "FireplaceQu", "Condition2", "RoofStyle", "SaleType", "GarageQual", "HouseStyle", "Fence", "MasVnrType", "RoofMatl", "Exterior2nd", "Alley", "BsmtCond", "HalfBath", "HeatingQC", "BldgType", "Electrical", "BsmtFinType2", "MiscVal", "BsmtHalfBath", "GarageCond", "X3SsnPorch", "ExterCond", "MiscFeature", "LowQualFinSF", "Utilities", "Foundation", "LandSlope", "KitchenAbvGr", "PoolArea", "Heating"
-
-
-
-# Reselect our variables, taking out some of them:
-dataset_clean <- training_clean[,c("SalePrice", "OverallQual", "GrLivArea", "GarageCars", "FullBath", "BsmtFinSF1", "TotalBsmtSF", "LotArea", "TotRmsAbvGrd", "X1stFlrSF", "GarageArea", "YearRemodAdd", "LotFrontage", "BsmtFinType1", "GarageFinish", "Fireplaces", "MoSold", "Neighborhood", "X2ndFlrSF", "YearBuilt", "SaleCondition", "BsmtUnfSF", "OverallCond", "GarageYrBlt", "CentralAir", "BsmtQual", "MasVnrArea", "WoodDeckSF", "GarageType", "MSZoning", "BedroomAbvGr", "Exterior1st", "MSSubClass", "Condition1", "KitchenQual", "BsmtExposure", "ScreenPorch", "OpenPorchSF", "Functional", "EnclosedPorch", "LotConfig", "PavedDrive", "BsmtFinSF2", "LandContour", "LotShape", "BsmtFullBath", "ExterQual", "YrSold", "FireplaceQu", "Condition2", "RoofStyle", "SaleType", "GarageQual", "HouseStyle", "Fence", "MasVnrType", "RoofMatl", "Exterior2nd", "Alley")]
-colnames(dataset_clean) <- c("SalePrice", "OverallQual", "GrLivArea", "GarageCars", "FullBath", "BsmtFinSF1", "TotalBsmtSF", "LotArea", "TotRmsAbvGrd", "X1stFlrSF", "GarageArea", "YearRemodAdd", "LotFrontage", "BsmtFinType1", "GarageFinish", "Fireplaces", "MoSold", "Neighborhood", "X2ndFlrSF", "YearBuilt", "SaleCondition", "BsmtUnfSF", "OverallCond", "GarageYrBlt", "CentralAir", "BsmtQual", "MasVnrArea", "WoodDeckSF", "GarageType", "MSZoning", "BedroomAbvGr", "Exterior1st", "MSSubClass", "Condition1", "KitchenQual", "BsmtExposure", "ScreenPorch", "OpenPorchSF", "Functional", "EnclosedPorch", "LotConfig", "PavedDrive", "BsmtFinSF2", "LandContour", "LotShape", "BsmtFullBath", "ExterQual", "YrSold", "FireplaceQu", "Condition2", "RoofStyle", "SaleType", "GarageQual", "HouseStyle", "Fence", "MasVnrType", "RoofMatl", "Exterior2nd", "Alley")
-
-# Reselected Gradient Boosting Model:
-output_vector <- dataset_clean[,1]
-xgb <- xgboost(data = data.matrix(dataset_clean[,-1]),  label = output_vector,  eta = 0.3, max_depth = 6,  nround=100)
-xgb_predictions <- predict(xgb, data.matrix(dataset_clean[,-1]))
-mse_reselected <- mean((xgb_predictions - dataset_clean$SalePrice)^2)
-names <- dimnames(data.matrix(dataset_clean[,-1]))[[2]]
-importance_matrix <- xgb.importance(names, model = xgb)
-
-
-
-
-## Remove variables
-# xgb3 <- xgboost(data = data.matrix(X[,c(2:39,41:80)]),  label = output_vector,  eta = 0.3, max_depth = 6,  nround=100)
-# xgb3_predictions <- predict(xgb3, data.matrix(X[,c(2:39,41:80)]))
-# names <- dimnames(data.matrix(X[,c(2:39,41:80)]))[[2]]
-# importance_matrix <- xgb.importance(names, model = xgb3)
-# xgb.plot.importance(importance_matrix[1:20,])
-# mse_test_value3 <- mean((xgb3_predictions - dataset_clean$SalePrice)^2)
+# Remove variables
+xgb3 <- xgboost(data = data.matrix(X[,c(2:39,41:80)]),  label = output_vector,  eta = 0.3, max_depth = 6,  nround=100)
+xgb3_predictions <- predict(xgb3, data.matrix(X[,c(2:39,41:80)]))
+names <- dimnames(data.matrix(X[,c(2:39,41:80)]))[[2]]
+importance_matrix <- xgb.importance(names, model = xgb3)
+xgb.plot.importance(importance_matrix[1:20,])
+mse_test_value3 <- mean((xgb3_predictions - dataset_clean$SalePrice)^2)
 
 
 
