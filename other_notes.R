@@ -26,4 +26,9 @@ mean_diff <- mean(xgb_test_predictions - test_clean$SalePrice); mean_diff
 
 
 
+# to save plots:
+png(filename="plot1.png")
+plot((xgb_test_predictions - test_clean$SalePrice)/test_clean$SalePrice)
+dev.off()
+
 
