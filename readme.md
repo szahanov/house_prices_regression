@@ -12,24 +12,24 @@
 
 * [Charts](https://github.com/szahanov/house_prices_regression/blob/master/charts/)
 
-* [Original data source](https://www.kaggle.com/c/house-prices-advanced-regression-techniques)
+* [Original data source from kaggle](https://www.kaggle.com/c/house-prices-advanced-regression-techniques)
 
 
 ## Data Visualization ##
 
 #### Feature Selection ####
 
-* One way that we selected our variables is by generating an importance matrix for our model:
+One way that we selected our variables is by generating an importance matrix for our model:
 
 ![Importance Matrix](https://raw.githubusercontent.com/szahanov/house_prices_regression/master/charts/importance_matrix.png "Importance Matrix")
 
-* OverallQual seemed to be an overwhelmingly useful variable so here is another vesion excluding it:
+OverallQual seemed to be an overwhelmingly useful variable so here is another vesion excluding it:
 
 ![Importance Matrix excluding OveralQual](https://raw.githubusercontent.com/szahanov/house_prices_regression/master/charts/importance_matrix_without_overallqual.png "Importance Matrix excluding OveralQual")
 
-* We exclude variables from the lower end of the importance vector until the metrics we use to test our model stop improving
+We exclude variables from the lower end of the importance vector until the metrics we use to test our model stop improving
 
-* The important matrix will change depending on what variables are included in the model, so this approach could be refined further
+The important matrix will change depending on what variables are included in the model, so this approach could be refined further
 
 
 #### Judgement ####
@@ -49,11 +49,11 @@ For this exercise we used the xgboost package, also known as extreme gradient bo
 
 Using xgboost we create a model that closely describes our training data, here is the comparison of the model vs the training data:
 
-* Here our model closely matches the Sale Price vector:
+Here our model closely matches the Sale Price vector:
 
 ![Predictions vs Sale Prices](https://raw.githubusercontent.com/szahanov/house_prices_regression/master/charts/xgbplot1.png "Predictions vs Sale Prices")
 
-* Here we have predictions indexed to the actual results ((Prediction - Sale Price)/(Sale Price)), the differences look random and averaged around 0. The variance of the error is slightly skewed but it's not noticeable just by looking at the plot:
+Here we have predictions indexed to the actual results ((Prediction - Sale Price)/(Sale Price)), the differences look random and averaged around 0. The variance of the error is slightly skewed but it's not noticeable just by looking at the plot:
 
 ![(Prediction - Sale Price)/(Sale Price)](https://raw.githubusercontent.com/szahanov/house_prices_regression/master/charts/xgbplot3.png "(Prediction - Sale Price)/(Sale Price)")
 
