@@ -75,7 +75,7 @@ r2 <- cor(dataset_clean$SalePrice,xgb_predictions)^2
 
 # check average
 mean_diff <- mean(xgb_predictions - dataset_clean$SalePrice)
-# mean_diff = -0.5406211 where the average SalePrice is $180,000, no immediately obvious bias
+# mean_diff = -0.5406211 where the average SalePrice is $180,000, no immediate obvious bias
 
 
 # some spot checks
