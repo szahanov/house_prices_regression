@@ -57,17 +57,20 @@ Using xgboost we create a model that closely describes our training data, here i
 
 ![(Prediction - Sale Price)/(Sale Price)](https://raw.githubusercontent.com/szahanov/house_prices_regression/master/charts/xgbplot3.png "(Prediction - Sale Price)/(Sale Price)")
 
-Performance Metrics  
+Performance Metrics
+
 >   Mean squared error  
 >       775421  
 >   Square root of MSE  
->       880.58  
->   Given that the average house price is $180,000, this is a good mean squared error  
+>       880.58
+
+Given that the average house price is $180,000, this is a good mean squared error
+
 >   R squared  
 >       0.9998803  
 
-* These are good results for our model. Naturally there is a chance of overfitting and this model likely does overfit a bit, with more analysis we could remove more variables and adjust our model further.
+These are good results for our model. Naturally there is a chance of overfitting and this model likely does overfit a bit, with more analysis we could remove more variables and adjust our model further.
 
-* Great success
+Great success
 
 
