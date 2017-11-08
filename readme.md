@@ -14,6 +14,10 @@
 
 * [Original data source from kaggle](https://www.kaggle.com/c/house-prices-advanced-regression-techniques)
 
+## Goal ##
+
+For this exercise we use the xgboost package, also known as extreme gradient boosting, to predict house sale prices using the data we are given.
+
 
 ## Data Visualization ##
 
@@ -45,8 +49,6 @@ Some variables are made up of others. These will correlate heavily and it might 
 
 ## Results ##
 
-For this exercise we used the xgboost package, also known as extreme gradient boosting, to predict house sale prices using the data we were given.
-
 Using xgboost we create a model that closely describes our training data, here is the comparison of the model vs the training data:
 
 Here our model closely matches the Sale Price vector:
@@ -69,7 +71,7 @@ Given that the average house price is $180,000, this is a good mean squared erro
 >   R squared  
 >       0.9998803  
 
-These are good results for our model. Naturally there is a chance of overfitting and this model likely does overfit a bit, with more analysis we could remove more variables and adjust our model further.
+These are good results for our model. Naturally there is a chance of overfitting and this model likely does overfit a bit, with more analysis we could remove more variables and adjust our model further. In real life I would not buy a house using raw machine learning results, results would need to be smoothed to account for outliers. For large and uncommon purchases it could make more sense to use simpler averages or a model that's more transparent like a GLM, but as the number of decisions required increases the case for machine learning gets stronger.
 
 Great success
 
