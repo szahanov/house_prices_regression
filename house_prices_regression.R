@@ -26,7 +26,7 @@ library(xgboost)
 
 # Import the dataset, fields are already named
 # dataset: https://archive.ics.uci.edu/ml/datasets/Image+Segmentation
-dataset<- read.csv("train.csv")
+dataset <- read.csv("train.csv")
 dataset = dataset[1:1000,]
 train = dataset[1:1000,]
 test = dataset[1001:1460,]
