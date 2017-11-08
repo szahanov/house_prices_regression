@@ -10,6 +10,8 @@
 
 * [Test Data](https://github.com/szahanov/house_prices_regression/blob/master/test.csv)
 
+* [Data Descriptions](https://github.com/szahanov/house_prices_regression/blob/master/data_description.txt)
+
 * [Charts](https://github.com/szahanov/house_prices_regression/blob/master/charts/)
 
 * [Original data source from kaggle](https://www.kaggle.com/c/house-prices-advanced-regression-techniques)
