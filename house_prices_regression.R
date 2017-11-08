@@ -53,7 +53,9 @@ xgb <- xgboost(data = data.matrix(dataset_clean[,2:80]),  label = output_vector,
 xgb_predictions <- predict(xgb, data.matrix(dataset_clean[,2:80])) # predict values in training set
 
 
+png(filename="xgbplot1.png")
 plot(xgb_predictions,dataset_clean$SalePrice)
+dev.off()
 # plot looks good
 
 
@@ -84,9 +86,13 @@ i=35;(xgb_predictions[i] - dataset_clean$SalePrice[i])/dataset_clean$SalePrice[i
 
 
 # reasonableness plots
+png(filename="xgbplot2.png")
 plot(xgb_predictions/max(dataset_clean$SalePrice),dataset_clean$SalePrice/max(dataset_clean$SalePrice))
+dev.off()
 # looks to be in order
+png(filename="xgbplot3.png")
 plot((xgb_predictions - dataset_clean$SalePrice)/dataset_clean$SalePrice)
+dev.off()
 
 
 # When testing the model it looked like the sale price predictions tended to be lower than the real values
@@ -104,7 +110,9 @@ plot((xgb_predictions - dataset_clean$SalePrice)/dataset_clean$SalePrice)
 # Compute a feature importance matrix
 names <- dimnames(data.matrix(dataset_clean[,2:80]))[[2]]
 importance_matrix <- xgb.importance(names, model = xgb)
+png(filename="importance_matrix.png")
 xgb.plot.importance(importance_matrix[1:30,])
+dev.off()
 
 
 # Variable OverallQual seemed to be the most useful by far so let's see a version of the importance matrix without it
@@ -112,7 +120,9 @@ xgb_xOverallQual <- xgboost(data = data.matrix(dataset_clean[,c(2:17,19:80)]),  
 xgb_xOverallQual_predictions <- predict(xgb_xOverallQual, data.matrix(dataset_clean[,c(2:17,19:80)]))
 names_xOverallQual <- dimnames(data.matrix(dataset_clean[,c(2:17,19:80)]))[[2]]
 importance_matrix_xOverallQual <- xgb.importance(names_xOverallQual, model = xgb_xOverallQual)
+png(filename="importance_matrix_without_overallqual.png")
 xgb.plot.importance(importance_matrix_xOverallQual[1:20,])
+dev.off()
 mse_test_value2 <- mean((xgb_xOverallQual_predictions - dataset_clean$SalePrice)^2)
 
 
